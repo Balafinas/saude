@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Saúde+</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #ffffff;
+      color: #333333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #00c37e;
+      color: white;
+      text-align: center;
+      padding: 20px 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h2 {
+      margin-top: 30px;
+      color: #00c37e;
+    }
+
+    label {
+      display: block;
+      margin: 8px 0;
+    }
+
+    input[type="text"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    input[type="submit"] {
+      background-color: #00c37e;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #009b65;
+    }
+
+    #resultado {
+      margin-top: 30px;
+      padding: 20px 25px;
+      border-left: 6px solid #00c37e;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #f2fef9, #e0fff3);
+      box-shadow: 0 2px 8px rgba(0, 195, 126, 0.15);
+      color: #003d2c;
+      font-size: 17px;
+      line-height: 1.7;
+      transition: all 0.3s ease;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Saúde+</h1>
+    <p>Responda as perguntas abaixo para obter recomendações</p>
+  </header>
+
+  <div class="container">
+    <form id="quizForm">
+      <h2>1. Qual o seu principal sintoma neste momento?</h2>
+      <label><input type="checkbox" name="sintoma" value="dor_cabeca" /> Dor de cabeça</label>
+      <label><input type="checkbox" name="sintoma" value="dor_muscular" /> Dor muscular</label>
+      <label><input type="checkbox" name="sintoma" value="febre" /> Febre</label>
+      <label><input type="checkbox" name="sintoma" value="tosse" /> Tosse</label>
+      <label><input type="checkbox" name="sintoma" value="congestao" /> Congestão nasal</label>
+      <label><input type="checkbox" name="sintoma" value="nausea" /> Náusea / Vômito</label>
+      <label><input type="checkbox" name="sintoma" value="diarreia" /> Diarreia</label>
+      <label><input type="checkbox" name="sintoma" value="outros" /> Outros</label>
+
+      <h2>2. Há quanto tempo você está sentindo esse sintoma?</h2>
+      <label><input type="radio" name="tempo" value="menos_24" /> Menos de 24 horas</label>
+      <label><input type="radio" name="tempo" value="1_3_dias" /> 1 a 3 dias</label>
+      <label><input type="radio" name="tempo" value="mais_3_dias" /> Mais de 3 dias</label>
+      <label><input type="radio" name="tempo" value="recorrente" /> É um sintoma recorrente</label>
+
+      <h2>3. Você apresenta mais algum sintoma associado?</h2>
+      <label><input type="checkbox" name="sintomas_associados" value="febre" /> Febre</label>
+      <label><input type="checkbox" name="sintomas_associados" value="calafrios" /> Calafrios</label>
+      <label><input type="checkbox" name="sintomas_associados" value="dor_corpo" /> Dor no corpo</label>
+      <label><input type="checkbox" name="sintomas_associados" value="nausea" /> Náusea</label>
+      <label><input type="checkbox" name="sintomas_associados" value="cansaco" /> Sensação de cansaço</label>
+      <label><input type="checkbox" name="sintomas_associados" value="nenhum" /> Nenhum outro</label>
+
+      <h2>4. Você tem alergia a algum medicamento?</h2>
+      <label><input type="radio" name="alergia" value="sim" onclick="document.getElementById('campoAlergia').style.display='block'" /> Sim</label>
+      <label><input type="radio" name="alergia" value="nao" onclick="document.getElementById('campoAlergia').style.display='none'" /> Não</label>
+      <label><input type="radio" name="alergia" value="nao_sei" onclick="document.getElementById('campoAlergia').style.display='none'" /> Não sei</label>
+
+      <div id="campoAlergia" style="display:none;">
+        <label>Informe o(s) medicamento(s):</label>
+        <input type="text" name="medicamentos_alergia" placeholder="Ex: Dipirona, Amoxicilina..." />
+      </div>
+
+      <h2>5. Você está tomando algum medicamento atualmente?</h2>
+      <label><input type="radio" name="tomando_medicamento" value="sim" onclick="document.getElementById('campoMedicamento').style.display='block'" /> Sim</label>
+      <label><input type="radio" name="tomando_medicamento" value="nao" onclick="document.getElementById('campoMedicamento').style.display='none'" /> Não</label>
+
+      <div id="campoMedicamento" style="display:none;">
+        <label>Informe o(s) medicamento(s) que está tomando:</label>
+        <input type="text" name="medicamentos_tomando" placeholder="Ex: Paracetamol, Ibuprofeno..." />
+      </div>
+
+      <h2>6. Você já consultou um médico sobre esse sintoma?</h2>
+      <label><input type="radio" name="consultou_medico" value="sim_alivio" /> Sim, estou apenas procurando alívio temporário</label>
+      <label><input type="radio" name="consultou_medico" value="nao_tentando_entender" /> Não, estou tentando entender o que pode ser</label>
+      <label><input type="radio" name="consultou_medico" value="nao_nao_pretendo" /> Não, e não pretendo procurar</label>
+
+      <h2>7. Qual a sua faixa etária?</h2>
+      <label><input type="radio" name="faixa_etaria" value="menor_12" /> Menor de 12 anos</label>
+      <label><input type="radio" name="faixa_etaria" value="13_17" /> 13 a 17 anos</label>
+      <label><input type="radio" name="faixa_etaria" value="18_59" /> 18 a 59 anos</label>
+      <label><input type="radio" name="faixa_etaria" value="60_mais" /> 60 anos ou mais</label>
+
+      <br /><br />
+      <input type="submit" value="Enviar Respostas" />
+    </form>
+
+    <div id="resultado"></div>
+  </div>
+
+  <script>
+    document.getElementById("quizForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const sintomas = Array.from(document.querySelectorAll('input[name="sintoma"]:checked')).map(el => el.value);
+
+      if (sintomas.length === 0) {
+        alert("Por favor, selecione pelo menos um sintoma principal.");
+        return;
+      }
+
+      const tomandoMedicamento = document.querySelector('input[name="tomando_medicamento"]:checked');
+      const medicamentoTomando = tomandoMedicamento?.value === "sim"
+        ? document.querySelector('input[name="medicamentos_tomando"]').value.trim()
+        : "";
+
+      const temAlergia = document.querySelector('input[name="alergia"]:checked')?.value === "sim";
+      const alergias = temAlergia
+        ? document.querySelector('input[name="medicamentos_alergia"]').value.toLowerCase().split(",").map(m => m.trim())
+        : [];
+
+      const remedios = {
+        dor_cabeca: ["Paracetamol", "Dipirona"],
+        dor_muscular: ["Ibuprofeno", "Diclofenaco"],
+        febre: ["Paracetamol", "Ibuprofeno"],
+        tosse: ["Xarope expectorante", "Antitussígeno"],
+        congestao: ["Descongestionante nasal"],
+        nausea: ["Dimenidrinato"],
+        diarreia: ["Solução de reidratação", "Antidiarreico"],
+        outros: ["Consulte um profissional de saúde"]
+      };
+
+      let todasRecomendacoes = [];
+
+      sintomas.forEach(sintoma => {
+        const sugestoes = remedios[sintoma] || ["Consulte um médico"];
+        const filtradas = sugestoes.filter(r =>
+          !alergias.some(alergia => r.toLowerCase().includes(alergia))
+        );
+
+        todasRecomendacoes.push({
+          sintoma,
+          recomendadas: filtradas.length > 0 ? filtradas : ["(Nenhuma recomendação segura - consulte um médico)"]
+        });
+      });
+
+      let mensagemFinal = todasRecomendacoes.map(r =>
+        `• Para ${r.sintoma.replace("_", " ")}: ${r.recomendadas.join(", ")}.`
+      ).join("\n");
+
+      if (medicamentoTomando) {
+        mensagemFinal += `\n\nVocê informou que está tomando: ${medicamentoTomando}.`;
+      }
+
+      const resultadoDiv = document.getElementById("resultado");
+      resultadoDiv.textContent = mensagemFinal;
+      resultadoDiv.scrollIntoView({ behavior: "smooth" });
+    });
+  </script>
+</body>
+</html>
